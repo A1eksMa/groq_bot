@@ -1,3 +1,6 @@
+#!/usr/bin/env python 
+#encoding: utf-8
+
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -27,7 +30,7 @@ def response(prompt: str, url=URL):
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
-    await message.answer("Hello!")
+    await message.answer("Welcome! I'm your minimal Telegram bot")
 
 @dp.message(F.text)
 async def chat(message: Message):
