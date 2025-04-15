@@ -2,7 +2,7 @@
 FROM python:3.13-slim-bookworm
 
 # set work directory
-WORKDIR /groq
+WORKDIR /bot
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -13,13 +13,11 @@ RUN apt update && apt upgrade -y
 
 # install dependencies
 RUN pip install --upgrade pip
-RUN pip install groq fastapi uvicorn
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
 # copy project
-COPY ./groq .
-
-# Set port
-EXPOSE 5555
+COPY . .
 
 # run
-CMD ["python3", "/groq/server.py"]
+CMD ["python3", "/bot/main.py"]
