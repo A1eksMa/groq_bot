@@ -1,0 +1,15 @@
+[Unit]
+Description=GPT4freeBot
+
+[Service]
+User=root                                                                                                                                                      
+Group=root                                                                                                                                                     
+Type=simple                                                                                                                                                    
+WorkingDirectory=/root/GPT4freeBot/                                                                                                                                        
+ExecStart=/root/GPT4freeBot/main.py                                                                                                                                         
+StandardOutput=null                                                                                                                                            
+Restart=always                                                                                                                                                 
+RestartSec=10                                                                                                                                                  
+                                                                                                                                                               
+[Install]
+WantedBy=multi-user.target                                                                                                                                     
