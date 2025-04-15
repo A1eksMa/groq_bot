@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram import F
+from aiogram.enums import ParseMode
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 import asyncio
 import requests
@@ -16,7 +17,7 @@ API_TOKEN = config.get("API_TOKEN")
 
 HOST = config.get("HOST")
 PORT = config.get("PORT")
-URL = f"http://{HOST}:{PORT}/groq_chat/"
+URL = f"http://{HOST}:{PORT}/groq_single_prompt/"
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -26,7 +27,12 @@ def response(prompt: str, url=URL):
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
-    await message.answer("Hello! I'm minimalistic telegram Bot.")
+    await message.answer("Hello!")
+
+@dp.message(F.text)
+async def chat(message: Message):
+    ans = response(message.text)
+    await message.answer(ans, parse_mode=ParseMode.MARKDOWN)
 
 async def main():
     await dp.start_polling(bot)
