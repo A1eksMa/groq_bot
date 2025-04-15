@@ -4,14 +4,25 @@ from aiogram.types import Message
 from aiogram import F
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 import asyncio
+import requests
+from dotenv import dotenv_values
 import logging
 
 logging.basicConfig(level=logging.INFO)
+config = dotenv_values()
 
-API_TOKEN = "YOUR_SECRET_TELEGRAM_TOKEN"
+#Your secret telegram token
+API_TOKEN = config.get("API_TOKEN")
+
+HOST = config.get("HOST")
+PORT = config.get("PORT")
+URL = f"http://{HOST}:{PORT}/groq_chat/"
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
+
+def response(prompt: str, url=URL):
+    return requests.get(url,params={"prompt" : f"{prompt}"}).text
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
