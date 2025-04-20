@@ -42,11 +42,13 @@ async def chat(message: Message):
     ans = ans.replace('-', '\\-')
     ans = ans.replace('+', '\\+')
     ans = ans.replace('=', '\\=')
+    ans = ans.replace('!', '\\!')
+    ans = ans.replace('&', '\\&')
+    ans = ans.replace('|', '\\|')
     ans = ans.replace('_', '\\_')
     ans = ans.replace('[', '\\[')
-    ans = ans.replace(']', '\\]')
-    
-    ans = ans.replace('\\"', '"')
+    ans = ans.replace(']', '\\]')   
+    ans = ans.replace('"', '\\"')
 
 
     await message.answer(ans, parse_mode=ParseMode.MARKDOWN_V2)
