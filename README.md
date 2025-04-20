@@ -1,2 +1,2 @@
-# GPT4freeBot
+# Groq Bot
 Telegram bot
