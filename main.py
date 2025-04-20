@@ -34,7 +34,7 @@ async def cmd_start(message: Message):
 
 @dp.message(F.text)
 async def chat(message: Message):
-    ans = response(message.text)
+    ans = response(message.text).replace('\\n', '\n')[1:-1]
     await message.answer(ans, parse_mode=ParseMode.MARKDOWN)
 
 async def main():
