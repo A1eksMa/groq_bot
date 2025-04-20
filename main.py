@@ -35,13 +35,14 @@ async def cmd_start(message: Message):
 @dp.message(F.text)
 async def chat(message: Message):
     ans = response(message.text)
+    ans = ans[1:-1]
     ans = ans.replace('\\n', '\n')
     ans = ans.replace('*', '\\*')
     ans = ans.replace('_', '\\_')
     ans = ans.replace('[', '\\[')
     ans = ans.replace(']', '\\]')
     ans = ans.replace('\\"', '"')
-    ans = ans.[1:-1]
+
 
     await message.answer(ans, parse_mode=ParseMode.MARKDOWN_V2)
 
