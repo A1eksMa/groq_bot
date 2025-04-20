@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram import F
-from aiogram.enums import ParseMode
+#from aiogram.enums import ParseMode
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 import asyncio
 import requests
@@ -36,13 +36,14 @@ async def cmd_start(message: Message):
 async def chat(message: Message):
     ans = response(message.text)
     ans = ans.replace('\\n', '\n')
-    ans = ans.replace('*', '\\*')
-    ans = ans.replace('_', '\\_')
-    ans = ans.replace('[', '\\[')
-    ans = ans.replace(']', '\\]')
-    ans = ans.replace('\\"', '"')[1:-1]
+    ans = ans.replace('\\*', '*')
+    #ans = ans.replace('_', '\\_')
+    #ans = ans.replace('[', '\\[')
+    #ans = ans.replace(']', '\\]')
+    ans = ans.replace('\\"', '"')
+    ans = ans.[1:-1]
 
-    await message.answer(ans, parse_mode=ParseMode.MARKDOWN_V2)
+    await message.answer(ans)
 
 async def main():
     await dp.start_polling(bot)
