@@ -2,7 +2,7 @@
 FROM python:3.13-slim-bookworm
 
 # set work directory
-WORKDIR /bot
+WORKDIR /groq_bot
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -20,4 +20,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # run
-CMD ["python3", "/bot/main.py"]
+CMD ["python3", "/groq_bot/main.py"]
