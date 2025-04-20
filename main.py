@@ -46,8 +46,11 @@ async def chat(message: Message):
     ans = ans.replace('&', '\\&')
     ans = ans.replace('|', '\\|')
     ans = ans.replace('_', '\\_')
+    ans = ans.replace('_', '\\_')
     ans = ans.replace('[', '\\[')
-    ans = ans.replace(']', '\\]')   
+    ans = ans.replace(']', '\\]')
+    ans = ans.replace('{', '\\{')
+    ans = ans.replace('}', '\\}') 
     ans = ans.replace('"', '\\"')
 
 
