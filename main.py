@@ -40,10 +40,11 @@ groq_api_params = {
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-async def response(prompt: str, url=URL, groq=groq_api_params) -> str:
-    groq["MESSAGES"].append({'role' : 'user', 'content' : prompt})
+async def response(prompt: str, url=URL) -> str:
+    global groq_api_params
+    groq_api_params["MESSAGES"].append({'role' : 'user', 'content' : prompt})
     async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=groq) as resp:
+        async with session.post(url, json=groq_api_params) as resp:
             return await resp.text()
 
 @dp.message(Command("start"))
