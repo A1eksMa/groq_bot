@@ -15,19 +15,35 @@ import logging
 logging.basicConfig(level=logging.INFO)
 config = dotenv_values()
 
-#Your secret telegram token
+#Your secret telegram API token
 API_TOKEN = config.get("API_TOKEN")
+
+#Your secret Groq API token
+YOUR_SECRET_GROQ_TOKEN = config.get("GROQ_TOKEN")
 
 HOST = config.get("HOST")
 PORT = config.get("PORT")
-URL = f"http://{HOST}:{PORT}/groq_single_prompt/"
+URL = f"http://{HOST}:{PORT}/"
+
+# Set the dictionary for Groq API parametres
+groq_api_params = {
+    "YOUR_SECRET_GROQ_TOKEN" : YOUR_SECRET_GROQ_TOKEN,
+    "MODEL": "llama-3.3-70b-versatile",
+    "MESSAGES": list(),
+    "TEMPERATURE": 1,
+    "MAX_COMPLETION_TOKENS": 1024,
+    "TOP_P": 1,
+    "STREAM": False,
+    "STOP": None,
+}
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-async def response(prompt: str, url=URL) -> str:
+async def response(prompt: str, url=URL, groq=groq_api_params) -> str:
+    groq["MESSAGES"].append({'role' : 'user', 'content' : prompt})
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, params={"prompt": prompt}) as resp:
+        async with session.post(url, json=groq) as resp:
             return await resp.text()
 
 @dp.message(Command("start"))
