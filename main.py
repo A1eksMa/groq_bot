@@ -45,7 +45,9 @@ async def response(prompt: str, url=URL) -> str:
     groq_api_params["MESSAGES"].append({'role' : 'user', 'content' : prompt})
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=groq_api_params) as resp:
-            return await resp.text()
+            response = await resp.text()
+            groq_api_params["MESSAGES"].append({'role': 'assistant', 'content': response})
+            return response
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
