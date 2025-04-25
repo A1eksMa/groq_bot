@@ -47,6 +47,7 @@ async def response(prompt: str, url=URL) -> str:
         async with session.post(url, json=groq_api_params) as resp:
             response = await resp.text()
             groq_api_params["MESSAGES"].append({'role': 'assistant', 'content': response})
+            groq_api_params["MESSAGES"] = groq_api_params["MESSAGES"][-10:]
             return response
 
 @dp.message(Command("start"))
