@@ -37,7 +37,6 @@ async def cmd_start(message: Message):
 @dp.message(F.text)
 async def chat(message: Message):
     ans = await response(message.text)
-    ans = response(message.text)
     ans = ans[1:-1]
     ans = ans.replace('\\n', '\n')
     ans = ans.replace('\\"', '"')
