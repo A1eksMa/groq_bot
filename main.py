@@ -8,7 +8,7 @@ from aiogram import F
 #from aiogram.enums import ParseMode
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 import asyncio
-import requests
+import aiohttp
 from dotenv import dotenv_values
 import logging
 
@@ -25,8 +25,10 @@ URL = f"http://{HOST}:{PORT}/groq_single_prompt/"
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-def response(prompt: str, url=URL):
-    return requests.get(url,params={"prompt" : f"{prompt}"}).text
+async def response(prompt: str, url=URL) -> str:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params={"prompt": prompt}) as resp:
+            return await resp.text()
 
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
@@ -34,9 +36,12 @@ async def cmd_start(message: Message):
 
 @dp.message(F.text)
 async def chat(message: Message):
+    ans = await response(message.text)
     ans = response(message.text)
     ans = ans[1:-1]
     ans = ans.replace('\\n', '\n')
+    ans = ans.replace('\\"', '"')
+    ans = ans.replace('\\*', '*')
     """
     ans = ans.replace('*', '\\*')
     ans = ans.replace('/', '\\/')
@@ -61,9 +66,6 @@ async def chat(message: Message):
     ans = ans.replace('}', '\\}') 
     ans = ans.replace('"', '\\"')
     """
-    ans = ans.replace('\\"', '"')
-    ans = ans.replace('\\*', '*')
-
 
     await message.answer(ans)#, parse_mode=ParseMode.MARKDOWN_V2)
 
