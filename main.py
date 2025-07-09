@@ -86,7 +86,7 @@ async def chat(message: Message):
     ans = ans.replace('"', '\\"')
     """
 
-    await message.answer(ans)#, parse_mode=ParseMode.MARKDOWN_V2)
+    await message.answer(ans), parse_mode=ParseMode.MARKDOWN_V2)
 
 async def main():
     await dp.start_polling(bot)
